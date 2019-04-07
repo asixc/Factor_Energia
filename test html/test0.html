@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title>plus()</title>
+</head>
+<body>
+	<script type="text/javascript">
+
+	/* TODO insert here your implementation of the "plus" method */
+
+
+	var	myInteger = parseInt(prompt('Enter a number', 5), 10);	// 5 is the default value of the prompt
+	
+	myInteger = {
+  		default : myInteger,
+  		plus : function(a) {
+    		return this.default + a;
+  		}
+	};
+	alert(myInteger.plus(2));
+	
+	</script>
+</body>
+</html>
