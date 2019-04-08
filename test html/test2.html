@@ -3,7 +3,85 @@
 <head>
 	<meta charset="UTF-8">
     <title>rectangles.html</title>
+    <style>
+        body{
+            margin: 0;
+            position: relative;
+        }
+    </style>
     <script type="text/javascript">
+        const bgColor = ['#F5D0C8', '#F0F0F0', '#A1A1A1', '#FFCCE3', '#CCEBFF', '#9EFAA7'];
+        const divColor = ['orange', 'magenta', 'red', 'white', 'red', 'black'];
+        let maxRectDimW;
+        let maxRectDimH;
+        let timeInside;
+        console.log(divColor.length);
+        function selectColor(paleta){
+            return bgColor[Math.floor(Math.random() * paleta.length)];
+        }
+        function creatPanel(){
+            let el = document.createElement('MAIN');
+            el.style.backgroundColor = selectColor(bgColor);
+            el.style.width = maxRectDimW + "px";
+            el.style.height = maxRectDimH + "px";
+            return el;
+        }
+        function createDiv(n){
+            let el = document.createElement('DIV');
+            el.style.backgroundColor = selectColor(divColor);
+            el.style.width = (maxRectDimW/3)+ "px";
+            el.style.height = (maxRectDimH/3) + "px";
+            el.style.position  = "absolute";
+            el.style.border = "1px solid black";
+            switch(n){
+                case 0:
+                    el.style.top = 0;
+                    el.style.left = 0;
+                    el.setAttribute("data-id", "0");
+                break;
+                case 1:
+                    el.style.top = 0;
+                    el.style.right = 0;
+                    el.setAttribute("data-id", "1");
+                break;
+                case 2:
+                    el.style.bottom = 0;
+                    el.style.left = 0;
+                    el.setAttribute("data-id", "2");
+                break;
+                case 3:
+                    el.style.bottom = 0;
+                    el.style.right = 0;
+                    el.setAttribute("data-id", "3");
+                break;
+            }
+            return el;
+        }
+        function init(){
+            maxRectDimW = document.documentElement.clientWidth;
+            maxRectDimH = document.documentElement.clientHeight;
+            let panel = creatPanel();
+            for (var i = 0; i < 4; i++) {
+                panel.appendChild(createDiv(i));
+            }
+            document.body.appendChild(panel);
+
+            
+            document.querySelectorAll('div').forEach(function(unBtn){ 
+                const id=unBtn.getAttribute('data-id');
+                unBtn.onmouseover=function(){
+                    this.style.backgroundColor = selectColor(divColor);
+                    timeInside = setTimeout(changePos, 3000, this);
+                }
+                unBtn.onmouseout=function(){
+                    clearTimeout(timeInside);
+                }
+            });
+        }
+
+        function changePos(element){
+            console.log(element);
+        }
         /*
 
          Specifications:
