@@ -1,67 +1,12 @@
 <!doctype html>
 <html lang="en-US">
 <head>
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <title>permuteChildren()</title>
-    <script type="text/javascript">
-        /*
-         Please write this function that:
-
-         - Verifies that the parent is a DOM node of type 'Element'. If not, it abandons by returning false.
-         - Cleans parent from any direct child that is not of type 'Element'.
-         - Randomly permutes parent's direct child elements.
-
-         Once this job accomplished, the function returns true.
-
-
-         Technical specifications:
-
-         - Pure DOM only (no frameworks)
-         - No HTML text (eg. innerHTML) manipulation
-
-
-         Example:
-
-         Given the following structure (hereby represented in HTML):
-
-         <ul>
-         <li>Apple
-         <ul>
-         <li>Golden</li>
-         <li>Lady</li>
-         </ul>
-         </li>
-         <li>Pear</li>
-         <li>Strawberry</li>
-         <li>Lemon</li>
-         This/these text node(s) will be removed by permuteChildren()
-         </ul>
-
-         After the call to:
-
-         permuteChildren(<the root UL node>)
-
-         The structure would become (for instance):
-
-         <ul>
-         <li>Strawberry</li>
-         <li>Pear</li>
-         <li>Lemon</li>
-         <li>Apple
-         <ul>
-         <li>Golden</li>
-         <li>Lady</li>
-         </ul>
-         </li>
-         </ul>
-         */
-
-
-        /*
-         You may use this JavaScript space for the tests. However, please clean it up before submitting your work.
-         */
-    </script>
-    <ul>
+   
+</head>
+<body>
+     <ul>
         <li>Apple
             <ul>
                 <li>Golden</li>
@@ -73,13 +18,45 @@
          <li>Lemon</li>
          This/these text node(s) will be removed by permuteChildren()
      </ul>
-
-</head>
-<body>
-<!--
-
-You may use this HTML space for the tests. However, please clean it up before submitting your work.
-
--->
 </body>
+<script>
+    const isElement = function(object){
+        try { 
+            return (object.constructor.__proto__.prototype.constructor.name)?true:false; 
+        }catch(e){ 
+            return false; 
+        } 
+    }
+    const cleanNodes = function(nodes){
+        let newUL = document.createElement('UL');
+        for (var i = 0; i < nodes.childNodes.length; i++) {
+            if (nodes.childNodes[i].nodeName == 'LI') {
+                 newUL.appendChild(nodes.childNodes[i].cloneNode(nodes.childNodes[i]));
+            }
+        }
+        return newUL = randomNode(newUL);
+    } 
+
+    const randomNode = function(node){
+        let repeat = [];
+        const min = 0;
+        let max = node.childElementCount;
+        let newULR = document.createElement('UL');
+        let insert = 0;
+        for (var i = 0; insert < max; i++) {
+            let pos = Math.floor(Math.random() * (max - min)) + min;
+            if (node.childNodes[pos].nodeName == 'LI' && !repeat.includes(pos) ) {
+                let aux = node.childNodes[pos].cloneNode(node.childNodes[pos]);
+                newULR.appendChild(aux);
+                repeat.push(pos);
+                insert++;
+            }
+        }
+        return newULR;
+    }
+
+    let parent = document.querySelector('UL');
+    let ej = document.createElement('UL');
+    parent.replaceWith(cleanNodes(parent));
+</script>
 </html>

@@ -28,11 +28,9 @@ $array = [
 function valueFirstCriterion($str){
 	$nVowels = 0;
 	$vowels = ['a','e','i','o','u'];
-	for ($i= strlen($str)-1; $i > 0; $i--) { 
-		//echo "Valor = ".$value. " + ". ord($str[$i]). '<br>';
+	for ($i= 0; $i < strlen($str); $i++) { 
 		for ($j=0; $j < sizeof($vowels) ; $j++) { 
 			if ($str[$i] == $vowels[$j]) {
-				//echo "Vocal encontrad: ". $str[$i];
 				$nVowels ++;
 			}
 			
@@ -40,37 +38,39 @@ function valueFirstCriterion($str){
 	}
 	return $nVowels ;
 }
-function valueSecondCriterion($str){
+function valueSecondCriterion($str,$str2){
+	/* method for compare this value Unicode.does not apply. 
 	$value = 0;
 	for ($i= strlen($str)-1; $i > 0; $i--) { 
-		//echo "Valor = ".$value. " + ". ord($str[$i]). '<br>';
 		$value += ord($str[$i]);
 	}
-	echo '<br>';
-	return $value;
+	*/
+	return strcmp($str, $str2);
 }
 
+
 function orderArray($array){
-	$res = [];
-	for ($i=0; $i < sizeof($array) ; $i++) { 
-		
-		$key = valueFirstCriterion($array[$i]);
-		echo '<br>'.$array[$i].$key.'<br>';
- 		array_push($res , $array[$key] = $array[$i])  ;
-	}
-	/*
-	foreach ($array as $i => $value) {
-		$array[$i] = 
-		$i = valueFirstCriterion($value);
-		//echo $i . '-' . $value;
-	}
-	*/
-	krsort($res);
-	return $res;
+	
+	for($i=1;$i<count($array);$i++){
+        for($j=0;$j<count($array)-$i;$j++){
+            if(valueFirstCriterion($array[$j])<valueFirstCriterion($array[$j+1])){
+        		$k=$array[$j+1];
+            	$array[$j+1]=$array[$j];
+            	$array[$j]=$k;
+                
+            }else if(valueFirstCriterion($array[$j])==valueFirstCriterion($array[$j+1])){
+            	if (valueSecondCriterion($array[$j],$array[$j+1]) < 0 ) {
+            		$k=$array[$j+1];
+            		$array[$j+1]=$array[$j];
+            		$array[$j]=$k;
+            	}
+            }
+
+        }
+    }
+	
+	return $array;
 }
-var_export($array);
-echo "<br>";
 $array = orderArray($array);
-echo "<br>";
 var_export($array);
 ?>
