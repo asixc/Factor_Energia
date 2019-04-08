@@ -15,7 +15,6 @@
         let maxRectDimW;
         let maxRectDimH;
         let timeInside;
-        console.log(divColor.length);
         function selectColor(paleta){
             return bgColor[Math.floor(Math.random() * paleta.length)];
         }
@@ -67,11 +66,15 @@
             document.body.appendChild(panel);
 
             
-            document.querySelectorAll('div').forEach(function(unBtn){ 
+            document.querySelectorAll('div').forEach(function(unBtn,ev){ 
                 const id=unBtn.getAttribute('data-id');
                 unBtn.onmouseover=function(){
                     this.style.backgroundColor = selectColor(divColor);
                     timeInside = setTimeout(changePos, 3000, this);
+                    console.log('----',ev);
+                    var x = window.event.clientX;
+                    var y = window.event.clientY;
+                    console.log('DENTRO:',x,y);
                 }
                 unBtn.onmouseout=function(){
                     clearTimeout(timeInside);
@@ -82,6 +85,7 @@
         function changePos(element){
             console.log(element);
         }
+
         /*
 
          Specifications:
