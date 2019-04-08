@@ -32,6 +32,7 @@
             el.style.height = (maxRectDimH/3) + "px";
             el.style.position  = "absolute";
             el.style.border = "1px solid black";
+            el.style.zIndex = "1";
             switch(n){
                 case 0:
                     el.style.top = 0;
@@ -66,15 +67,17 @@
             document.body.appendChild(panel);
 
             
-            document.querySelectorAll('div').forEach(function(unBtn,ev){ 
+            document.querySelectorAll('div').forEach(function(unBtn){ 
                 const id=unBtn.getAttribute('data-id');
                 unBtn.onmouseover=function(){
                     this.style.backgroundColor = selectColor(divColor);
-                    timeInside = setTimeout(changePos, 3000, this);
-                    console.log('----',ev);
-                    var x = window.event.clientX;
-                    var y = window.event.clientY;
-                    console.log('DENTRO:',x,y);
+                    let x = window.event.clientX;
+                    let y = window.event.clientY;
+                    position = [x,y];
+                    console.log(this.style.top,this.style.bottom,this.style.left,this.style.right, this ,this.offsetWidth, this.offsetHeight, position);
+                    timeInside = setTimeout(changePos, 3000, this, position);
+                    
+                    
                 }
                 unBtn.onmouseout=function(){
                     clearTimeout(timeInside);
@@ -82,8 +85,29 @@
             });
         }
 
-        function changePos(element){
-            console.log(element);
+        function changePos(element,position){
+            element.style.zIndex = String(parseInt(element.style.zIndex)+1);
+            let top = element.style.getPropertyValue('top');
+            element.style.top = null;
+            element.style.bottom = null;
+            element.style.right = null;
+            element.style.left = null;
+            if (position[0] < element.offsetWidth ) {
+                console.log('ifR');
+                element.style.right =   Math.floor(Math.random() * position[0]);
+            }else {
+                element.style.left =   Math.floor(Math.random() * (position[0] - 0 + 1)) + 0;
+                console.log('elseL');
+            }
+            if (position[1] < element.offsetHeight ) {
+                console.log('ifB');
+                element.style.bottom =   Math.floor(Math.random() * position[1]);
+            }else {
+                element.style.bottom =   Math.floor(Math.random() * (position[1] - 0 + 1)) + 0;
+                console.log('elseL');
+            }
+
+            
         }
 
         /*
