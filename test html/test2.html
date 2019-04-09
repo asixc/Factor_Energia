@@ -11,12 +11,13 @@
     </style>
     <script type="text/javascript">
         const bgColor = ['#F5D0C8', '#F0F0F0', '#A1A1A1', '#FFCCE3', '#CCEBFF', '#9EFAA7'];
-        const divColor = ['orange', 'magenta', 'red', 'white', 'red', 'black'];
+        const divColor = ['#ff5722', '#673ab7','rgb(219, 0, 0)', 'rgb(219, 219, 0)', 'rgb(0, 0, 219)', '#36f456','rgb(0, 0, 0)'];
         let maxRectDimW;
         let maxRectDimH;
         let timeInside;
         function selectColor(paleta){
-            return bgColor[Math.floor(Math.random() * paleta.length)];
+            return paleta[Math.floor(Math.random() * paleta.length)];
+
         }
         function creatPanel(){
             let el = document.createElement('MAIN');
