@@ -65,49 +65,45 @@
                 panel.appendChild(createDiv(i));
             }
             document.body.appendChild(panel);
-
-            
+            //Aply Function: 
             document.querySelectorAll('div').forEach(function(unBtn){ 
                 const id=unBtn.getAttribute('data-id');
                 unBtn.onmouseover=function(){
                     this.style.backgroundColor = selectColor(divColor);
                     let x = window.event.clientX;
                     let y = window.event.clientY;
-                    position = [x,y];
-                    console.log(this.style.top,this.style.bottom,this.style.left,this.style.right, this ,this.offsetWidth, this.offsetHeight, position);
-                    timeInside = setTimeout(changePos, 3000, this, position);
-                    
-                    
+                    positionMouse = [x,y];
+                    timeInside = setTimeout(changePos, 3000, this, positionMouse);
                 }
                 unBtn.onmouseout=function(){
                     clearTimeout(timeInside);
                 }
             });
         }
-
-        function changePos(element,position){
+        function posRandom(mx, mn){
+            return Math.floor(Math.random() * mx) + mn;
+        }
+        function resetPos(el){
+            el.style.top = null;
+            el.style.bottom = null;
+            el.style.right = null;
+            el.style.left = null;
+        }
+        function changePos(element,positionMouse){
             element.style.zIndex = String(parseInt(element.style.zIndex)+1);
             let top = element.style.getPropertyValue('top');
-            element.style.top = null;
-            element.style.bottom = null;
-            element.style.right = null;
-            element.style.left = null;
-            if (position[0] < element.offsetWidth ) {
-                console.log('ifR');
-                element.style.right =   Math.floor(Math.random() * position[0]);
+            let nuevoX = posRandom((maxRectDimW-element.offsetWidth), 0);
+            let nuevoY =posRandom((maxRectDimH-element.offsetHeight), 0);
+            if (positionMouse[0] < element.offsetWidth ) {
+                element.style.right =  nuevoX + 'px';
             }else {
-                element.style.left =   Math.floor(Math.random() * (position[0] - 0 + 1)) + 0;
-                console.log('elseL');
+                element.style.left =  nuevoX + 'px';
             }
-            if (position[1] < element.offsetHeight ) {
-                console.log('ifB');
-                element.style.bottom =   Math.floor(Math.random() * position[1]);
+            if (positionMouse[1] < element.offsetHeight ) {
+                element.style.top =  nuevoY + 'px';
             }else {
-                element.style.bottom =   Math.floor(Math.random() * (position[1] - 0 + 1)) + 0;
-                console.log('elseL');
+                element.style.bottom =   nuevoY + 'px';
             }
-
-            
         }
 
         /*
@@ -147,10 +143,7 @@
 
          */
 
-        /* Please write your JavaScript code here */
-
     </script>
-    <!-- If using a framework, please insert <script src> here -->
 </head>
 <body onload="init()">
 </body>
