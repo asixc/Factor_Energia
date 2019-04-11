@@ -20,6 +20,11 @@
 	};
 	alert(myInteger.plus(2));
 	
+	//Correct method is asignament by prototype: 
+	Number.prototype.plus = function(n) { return this.valueOf() + n; };
+
+	var	myInteger2 = parseInt(prompt('Enter a number', 5), 10);
+	alert(myInteger2.plus(2));
 	</script>
 </body>
 </html>
